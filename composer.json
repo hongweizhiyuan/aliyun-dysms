@@ -1,0 +1,11 @@
+{
+    "name": "hongweizhiyuan/aliyun-dysms",
+    "description": "aliyun sms 2019",
+    "authors": [
+        {
+            "name": "hongweizhiyuan",
+            "email": "403236160@qq.com"
+        }
+    ],
+    "require": {}
+}
