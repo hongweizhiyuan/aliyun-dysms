@@ -7,5 +7,7 @@
             "email": "403236160@qq.com"
         }
     ],
-    "require": {}
+    "require": {
+        "ext-json" : "*"
+    }
 }

@@ -58,35 +58,30 @@ class Sms
      * @author hongwei 2019-02-24
      * @param string $phone 短信接收号码
      * @param string $action 发送行为，单发SendSms，群发SendBatchSms
+     * @param string $code 验证码
      * @return bool|\stdClass
      */
     public function request($phone, $action, $code)
     {
-        $id = $this->accessKeyId;
+        $id     = $this->accessKeyId;
         $secret = $this->accessKeySecret;
         //step1:发送
-        $security = false;  //必填：是否启用https
-        $domain = 'dysmsapi.aliyuncs.com';
+        $security = false;                              //必填：是否启用https
+        $domain   = 'dysmsapi.aliyuncs.com';            //短信发送网关
         //step2:参数
-        $paramsOne =[
-            "PhoneNumbers" => $phone,   //必填: 短信接收号码
-            "SignName" => $this->signName,  //必填: 短信签名
-            "TemplateCode" => $this->templateCode,   //必填: 短信模板Code
-            "TemplateParam" => [
-                "code" => $code,
-                "product" => "abc"  //这里必须是英文字母不知道为什么，还必须得写
-            ],
-            //'OutId' => "12345", //可选: 设置发送短信流水号
-            //'SmsUpExtendCode' => "1234567", //可选: 设置发送短信流水号
+        $paramsOne = [
+            "PhoneNumbers"  => $phone,                  //参数1: 短信接收号码（必填）
+            "SignName"      => $this->signName,         //参数2: 短信签名（必填）
+            "TemplateCode"  => $this->templateCode,     //参数3: 短信模板Code（必填）,
+            "TemplateParam" => '{"code":'.$code.'}'     //参数4：验证码
+
+            //'OutId'           => "12345",             //可选: 设置发送短信流水号
+            //'SmsUpExtendCode' => "1234567",           //可选: 设置发送短信流水号
         ];
-        // *** 需用户填写部分结束, 以下代码若无必要无需更改 ***
-        if(!empty($paramsOne["TemplateParam"]) && is_array($paramsOne["TemplateParam"])) {
-            $paramsOne["TemplateParam"] = json_encode($paramsOne["TemplateParam"], JSON_UNESCAPED_UNICODE);
-        }
         //step3
         $paramsTwo = [
             "RegionId" => "cn-hangzhou",
-            "Action" => $action,
+            "Action"   => $action,
             "Version" => "2017-05-25",
         ];
         $params = array_merge($paramsOne, $paramsTwo);
@@ -103,11 +98,12 @@ class Sms
 
     /**
      * 短信下发
-     * 说明：发送一条或者多条内容相同的短信
+     * 说明：相同的签名，发送一条或者多条内容给不同的手机号码
      * @author hongwei 2019-02-14
-     * @param string $phones 手机号
+     * @param string $phones 手机号，支持多手机号，用逗号隔开
      * @param string $code 验证码
      * @return bool|\stdClass
+     * @doc https://help.aliyun.com/document_detail/101414.html?spm=a2c4g.11186623.6.580.345230bb3OUcY9
      */
     public function sendSms($phones, $code)
     {
@@ -122,20 +118,13 @@ class Sms
 
     /**
      * 短信下发
-     * todo 目前有问题，明天再写
      * 说明：发送多条不同的短信
      * @param string $phones 手机号
      * @param string $code 验证码
-     * @return bool|\stdClass
+     * @doc https://help.aliyun.com/document_detail/102364.html?spm=a2c4g.11186623.6.579.345230bbIMjjvF
      */
     public function sendBatchSms($phones, $code)
     {
-        try {
-            $result = $this->request($phones, 'SendBatchSms', $code);
-        } catch (\Exception $e) {
-            echo 'Message is:'.$e->getMessage(), '，Code is '.$e->getCode();
-            exit;
-        }
-        return $result;
+        //目前没有这需要，暂时不做了
     }
 }
