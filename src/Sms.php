@@ -4,9 +4,9 @@
 // +----------------------------------------------------------------------
 // | Author: 子弹兄  Date:2019-02-24 Time:21:08
 // +----------------------------------------------------------------------
-namespace Aliyun;
+namespace Yanghongwei\AliyunSms;
 
-use Aliyun\lib\SignatureHelper;
+use Yanghongwei\AliyunSms\lib\SignatureHelper;
 
 class Sms
 {

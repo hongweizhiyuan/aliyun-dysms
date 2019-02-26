@@ -9,5 +9,10 @@
     ],
     "require": {
         "ext-json" : "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Yanghongwei\\AliyunSms\\": "src/"
+        }
     }
 }

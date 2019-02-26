@@ -1,6 +1,6 @@
 <?php
 
-namespace Aliyun\lib;
+namespace Yanghongwei\AliyunSms\lib;
 
 /**
  * 签名助手 2017/11/19
